@@ -31,9 +31,9 @@ class RsSitemap
     /**
      * RsSitemap constructor.
      * @param string $filepath
-     * @param false $needNewLine
+     * @param bool $needNewLine
      */
-    public function __construct($filepath, $needNewLine = false)
+    public function __construct(string $filepath, bool $needNewLine = false)
     {
         $this->filepath = $filepath;
         $this->needNewLine = $needNewLine;
@@ -43,7 +43,7 @@ class RsSitemap
     /**
      * @throws FileOpenException
      */
-    protected function openFile()
+    public function openFile()
     {
         $this->handle = fopen($this->filepath, 'a');
 
@@ -67,7 +67,7 @@ class RsSitemap
      */
     public function writeUrl(ElementGenerateXml $element): bool
     {
-        if (fwrite($this->handle, $element->getXml()) === false) {
+        if (fwrite($this->handle, $element->buildXml()) === false) {
             return false;
         }
 
@@ -92,7 +92,7 @@ class RsSitemap
         return $this->countUrls;
     }
 
-    protected function closeFile()
+    public function closeFile()
     {
         if ($this->handle) {
             fwrite($this->handle, $this->nl() . $this->urlset->endTag());
