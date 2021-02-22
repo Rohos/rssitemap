@@ -95,7 +95,7 @@ class RsSitemap
     public function closeFile()
     {
         if ($this->handle) {
-            fwrite($this->handle, $this->nl() . $this->urlset->endTag());
+            fwrite($this->handle, $this->nl() . $this->urlset->endTag() . "\n");
 
             fclose($this->handle);
         }
