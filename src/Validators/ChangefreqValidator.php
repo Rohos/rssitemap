@@ -18,16 +18,19 @@ class ChangefreqValidator implements Validator
     /** @var $this|null */
     private static $instance;
 
+    /**
+     * ChangefreqValidator constructor.
+     */
     private function __construct()
     {
         $this->values = [
-            ChangefreqElement::CHANGEFREQ_ALWAYS,
-            ChangefreqElement::CHANGEFREQ_DAILY,
-            ChangefreqElement::CHANGEFREQ_HOURLY,
-            ChangefreqElement::CHANGEFREQ_MONTHLY,
-            ChangefreqElement::CHANGEFREQ_WEEKLY,
-            ChangefreqElement::CHANGEFREQ_YEARLY,
-            ChangefreqElement::CHANGEFREQ_NEVER,
+            ChangefreqElement::ALWAYS,
+            ChangefreqElement::DAILY,
+            ChangefreqElement::HOURLY,
+            ChangefreqElement::MONTHLY,
+            ChangefreqElement::WEEKLY,
+            ChangefreqElement::YEARLY,
+            ChangefreqElement::NEVER,
         ];
     }
 

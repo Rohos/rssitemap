@@ -13,35 +13,35 @@ interface ChangefreqElement
     /**
      * @var string "всегда" - для описания документов, которые изменяются при каждом доступе к этим документам
      */
-    const CHANGEFREQ_ALWAYS = 'always';
+    const ALWAYS = 'always';
 
     /**
      * @var string "ежечасно"
      */
-    const CHANGEFREQ_HOURLY = 'hourly';
+    const HOURLY = 'hourly';
 
     /**
      * @var string "ежедневно"
      */
-    const CHANGEFREQ_DAILY = 'daily';
+    const DAILY = 'daily';
 
     /**
      * @var string "еженедельно"
      */
-    const CHANGEFREQ_WEEKLY = 'weekly';
+    const WEEKLY = 'weekly';
 
     /**
      * @var string "ежемесячно"
      */
-    const CHANGEFREQ_MONTHLY = 'monthly';
+    const MONTHLY = 'monthly';
 
     /**
      * @var string "ежегодно"
      */
-    const CHANGEFREQ_YEARLY = 'yearly';
+    const YEARLY = 'yearly';
 
     /**
      * @var string "никогда"
      */
-    const CHANGEFREQ_NEVER = 'never';
+    const NEVER = 'never';
 }

@@ -35,13 +35,13 @@ class Url implements Element, ElementGenerateXml
 
     /**
      * Url constructor.
-     * @param string $url
+     * @param string $pageUrl
      * @param string $newLine
      */
-    public function __construct(string $url, string $newLine = '')
+    public function __construct(string $pageUrl, string $newLine = '')
     {
         $this->newLine = $newLine;
-        $this->setLoc($url);
+        $this->setLoc($pageUrl);
     }
 
     /**
