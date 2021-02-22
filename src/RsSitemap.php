@@ -81,7 +81,7 @@ class RsSitemap
      */
     public function newUrl(string $url): Url
     {
-        return new Url($url, $this->needNewLine);
+        return new Url($url, $this->nl());
     }
 
     /**
