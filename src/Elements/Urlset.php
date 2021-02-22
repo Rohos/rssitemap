@@ -6,6 +6,7 @@ use Rohos\RsSitemap\Elements\Interfaces\Element;
 
 /**
  * Class Urlset
+ * Инкапсулирует этот файл и указывает стандарт текущего протокола
  * @package Rohos\RsSitemap\Elements
  */
 class Urlset implements Element

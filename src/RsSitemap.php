@@ -2,6 +2,7 @@
 
 namespace Rohos\RsSitemap;
 
+use Rohos\RsSitemap\Elements\Url;
 use Rohos\RsSitemap\Elements\Urlset;
 use Rohos\RsSitemap\Exceptions\FileOpenException;
 use Rohos\RsSitemap\Elements\Interfaces\ElementGenerateXml;
@@ -57,10 +58,7 @@ class RsSitemap
             . $this->urlset->beginTag()
             . $this->nl();
 
-        file_put_contents(
-            $this->filepath,
-            $beginTxt
-        );
+        file_put_contents($this->filepath, $beginTxt);
     }
 
     /**
@@ -75,6 +73,15 @@ class RsSitemap
 
         $this->countUrls++;
         return true;
+    }
+
+    /**
+     * @param string $url
+     * @return Url
+     */
+    public function newUrl(string $url): Url
+    {
+        return new Url($url, $this->needNewLine);
     }
 
     /**

@@ -11,5 +11,5 @@ interface ElementGenerateXml
     /**
      * @return string
      */
-    public function getXml(): string;
+    public function buildXml(): string;
 }
