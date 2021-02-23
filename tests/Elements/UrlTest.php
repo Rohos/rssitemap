@@ -23,12 +23,15 @@ class UrlTest extends TestCase
      */
     protected function setUp()
     {
-        $this->url = new Url(self::URL);
+        parent::setUp();
+
+        $this->url = new Url();
     }
 
     /** @test */
     public function checkSimpleXml(): void
     {
+        $this->url->setLoc(self::URL);
         $xml = sprintf('<%s><loc>%s</loc></%s>', self::TAG, self::URL, self::TAG);
         $this->assertEquals($xml, $this->url->buildXml());
     }
@@ -37,7 +40,8 @@ class UrlTest extends TestCase
     public function checkSimpleXmlWithNl(): void
     {
         $nl = "\n";
-        $url = new Url(self::URL, $nl);
+        $url = new Url($nl);
+        $url->setLoc(self::URL);
         $format = '<%s>%s<loc>%s%s%s</loc>%s</%s>%s';
         $xml = sprintf($format, self::TAG, $nl, $nl, self::URL, $nl, $nl, self::TAG, $nl);
 
@@ -49,7 +53,8 @@ class UrlTest extends TestCase
     {
         $format = '<%s><loc>%s</loc><lastmod>%s</lastmod></%s>';
         $val = '2021-01-01';
-        $this->url->setLastmod($val);
+        $this->url->setLoc(self::URL)
+            ->setLastmod($val);
         $xml = sprintf($format, self::TAG, self::URL, $val, self::TAG);
         $this->assertEquals($xml, $this->url->buildXml());
     }
@@ -63,7 +68,8 @@ class UrlTest extends TestCase
         ];
 
         foreach ($values as $val) {
-            $this->url->setChangefreq($val);
+            $this->url->setLoc(self::URL)
+                ->setChangefreq($val);
             $xml = sprintf($format, self::TAG, self::URL, $val, self::TAG);
             $this->assertEquals($xml, $this->url->buildXml());
         }
@@ -76,7 +82,8 @@ class UrlTest extends TestCase
         $values = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
 
         foreach ($values as $val) {
-            $this->url->setPriority($val);
+            $this->url->setLoc(self::URL)
+                ->setPriority($val);
             $xml = sprintf($format, self::TAG, self::URL, $val, self::TAG);
             $this->assertEquals($xml, $this->url->buildXml());
         }
@@ -93,7 +100,8 @@ class UrlTest extends TestCase
 
         foreach ($values as $val) {
             $this->expectException(IncorrectElementValueException::class);
-            $this->url->setPriority($val);
+            $this->url->setLoc(self::URL)
+                ->setPriority($val);
             $xml = sprintf($format, self::TAG, self::URL, $val, self::TAG);
             $this->assertEquals($xml, $this->url->buildXml());
         }

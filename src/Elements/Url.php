@@ -3,17 +3,17 @@
 namespace Rohos\RsSitemap\Elements;
 
 use Rohos\RsSitemap\Elements\Interfaces\Element;
-use Rohos\RsSitemap\Elements\Interfaces\ElementGenerateXml;
-use Rohos\RsSitemap\Exceptions\IncorrectElementValueException;
-use Rohos\RsSitemap\Validators\ChangefreqValidator;
 use Rohos\RsSitemap\Validators\PriorityValidator;
+use Rohos\RsSitemap\Validators\ChangefreqValidator;
+use Rohos\RsSitemap\Exceptions\NotSetRequiredValueException;
+use Rohos\RsSitemap\Exceptions\IncorrectElementValueException;
 
 /**
  * Class Url
  * Родительский тег для каждой записи URL-адреса
  * @package Rohos\RsSitemap\Elements
  */
-class Url implements Element, ElementGenerateXml
+class Url implements Element
 {
     /** @var string */
     const TAG_LOC = 'loc';
@@ -35,13 +35,11 @@ class Url implements Element, ElementGenerateXml
 
     /**
      * Url constructor.
-     * @param string $pageUrl
      * @param string $newLine
      */
-    public function __construct(string $pageUrl, string $newLine = '')
+    public function __construct(string $newLine = '')
     {
         $this->newLine = $newLine;
-        $this->setLoc($pageUrl);
     }
 
     /**
@@ -74,7 +72,7 @@ class Url implements Element, ElementGenerateXml
      * @param string $val
      * @return $this
      */
-    protected function setLoc(string $val): self
+    public function setLoc(string $val): self
     {
         $this->data[self::TAG_LOC] = $val;
         return $this;
@@ -125,16 +123,30 @@ class Url implements Element, ElementGenerateXml
     }
 
     /**
-     * @inheritDoc
+     * @return string
+     * @throws NotSetRequiredValueException
      */
     public function buildXml(): string
     {
+        if (empty($this->data[self::TAG_LOC])) {
+            throw new NotSetRequiredValueException('Not set value for: '. self::TAG_LOC);
+        }
+
         $element = $this->beginTag() . $this->newLine;
 
         foreach ($this->data as $tag => $val) {
             $element .= ElementBuilder::i()->build($tag, $val, $this->newLine);
         }
 
-        return $element . $this->endTag() . $this->newLine;
+        $xml = $element . $this->endTag() . $this->newLine;
+
+        $this->clearData();
+
+        return $xml;
+    }
+
+    protected function clearData()
+    {
+        $this->data = [];
     }
 }

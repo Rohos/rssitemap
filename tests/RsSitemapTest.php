@@ -17,6 +17,8 @@ class RsSitemapTest extends TestCase
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $this->removeFile();
     }
 
@@ -29,18 +31,24 @@ class RsSitemapTest extends TestCase
     }
 
     /**
-     * @param Url[] $urls
+     * @param array $pages
      * @test
-     * @dataProvider dataUrls
+     * @dataProvider dataPages
      */
-    public function isFileCreated(array $urls): void
+    public function isFileCreated(array $pages): void
     {
         $sitemap = new RsSitemap($this->getFilePath());
+        $url = new Url();
 
         $sitemap->openFile();
 
-        foreach ($urls as $url) {
-            $sitemap->writeUrl($url);
+        foreach ($pages as $page) {
+            $sitemap->writeUrl(
+                $url->setLoc($page['loc'])
+                    ->setLastmod($page['lastmod'])
+                    ->setChangefreq($page['changefreq'])
+                    ->setPriority($page['priority'])
+            );
         }
 
         $sitemap->closeFile();
@@ -53,17 +61,48 @@ class RsSitemapTest extends TestCase
     }
 
     /**
+     * @param array $pages
+     * @test
+     * @dataProvider dataPages
+     */
+    public function isCorrectCountAndClearUrl(array $pages)
+    {
+        $sitemap = new RsSitemap($this->getFilePath());
+        $url = new Url();
+
+        $sitemap->openFile();
+
+        foreach ($pages as $page) {
+            $sitemap->writeUrl(
+                $url->setLoc($page['loc'])
+                    ->setLastmod($page['lastmod'])
+                    ->setChangefreq($page['changefreq'])
+                    ->setPriority($page['priority'])
+            );
+        }
+
+        $sitemap->closeFile();
+
+        $this->assertEquals(1, $sitemap->countUrls());
+
+        $sitemap->clearCountUrls();
+        $this->assertEquals(0, $sitemap->countUrls());
+    }
+
+    /**
      * @return array
      */
-    public function dataUrls(): array
+    public function dataPages(): array
     {
         return [
             [
                 [
-                    (new Url('https://github.com/Rohos/rssitemap'))
-                        ->setLastmod('2021-01-25')
-                        ->setChangefreq('always')
-                        ->setPriority(0.5),
+                    [
+                        'loc' => 'https://github.com/Rohos/rssitemap',
+                        'lastmod' => '2021-01-25',
+                        'changefreq' => 'always',
+                        'priority' => 0.5,
+                    ],
                 ]
             ]
         ];

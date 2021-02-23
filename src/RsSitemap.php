@@ -5,7 +5,7 @@ namespace Rohos\RsSitemap;
 use Rohos\RsSitemap\Elements\Url;
 use Rohos\RsSitemap\Elements\Urlset;
 use Rohos\RsSitemap\Exceptions\FileOpenException;
-use Rohos\RsSitemap\Elements\Interfaces\ElementGenerateXml;
+use Rohos\RsSitemap\Exceptions\NotSetRequiredValueException;
 
 /**
  * Class RsSitemap
@@ -62,12 +62,13 @@ class RsSitemap
     }
 
     /**
-     * @param ElementGenerateXml $element
+     * @param Url $url
      * @return bool
+     * @throws NotSetRequiredValueException
      */
-    public function writeUrl(ElementGenerateXml $element): bool
+    public function writeUrl(Url $url): bool
     {
-        if (fwrite($this->handle, $element->buildXml()) === false) {
+        if (fwrite($this->handle, $url->buildXml()) === false) {
             return false;
         }
 
@@ -76,12 +77,11 @@ class RsSitemap
     }
 
     /**
-     * @param string $url
      * @return Url
      */
-    public function newUrl(string $url): Url
+    public function newUrl(): Url
     {
-        return new Url($url, $this->nl());
+        return new Url($this->nl());
     }
 
     /**
@@ -90,6 +90,11 @@ class RsSitemap
     public function countUrls(): int
     {
         return $this->countUrls;
+    }
+
+    public function clearCountUrls()
+    {
+        return $this->countUrls = 0;
     }
 
     public function closeFile()

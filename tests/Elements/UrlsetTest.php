@@ -21,6 +21,8 @@ class UrlsetTest extends TestCase
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $this->urlset = new Urlset();
     }
 
