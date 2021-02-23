@@ -80,7 +80,7 @@ class RsSitemapTest extends TestCase
     protected function removeFile(): void
     {
         if (file_exists($this->getFilePath())) {
-//            unlink($this->getFilePath());
+            unlink($this->getFilePath());
         }
     }
 }
