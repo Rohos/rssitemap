@@ -1,6 +1,6 @@
 {
     "name": "rohos/rssitemap",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "require": {
         "php": ">=7.1.0"
     },
