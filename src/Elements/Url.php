@@ -2,6 +2,7 @@
 
 namespace Rohos\RsSitemap\Elements;
 
+use Rohos\RsSitemap\Validators\LocValidator;
 use Rohos\RsSitemap\Elements\Interfaces\Element;
 use Rohos\RsSitemap\Validators\PriorityValidator;
 use Rohos\RsSitemap\Validators\ChangefreqValidator;
@@ -68,12 +69,14 @@ class Url implements Element
 
     /**
      * URL-адрес страницы [обязательный]
-     * @TODO Add validator
      * @param string $val
      * @return $this
+     * @throws IncorrectElementValueException
      */
     public function setLoc(string $val): self
     {
+        LocValidator::i()->check($val);
+
         $this->data[self::TAG_LOC] = $val;
         return $this;
     }

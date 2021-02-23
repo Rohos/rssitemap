@@ -77,6 +77,7 @@ $url = new Url($newLine);
  * Page URL - required
  * @param string $val - awaits page url
  * @return Url
+ * @throws \Rohos\RsSitemap\Exceptions\IncorrectElementValueException
  */
 $url->setLoc($val);
 
@@ -135,7 +136,7 @@ $pages = [
 
 $sitemap->openFile();
 
-$url = $sitemap->newUrl(); // $url = new Url();
+$url = $sitemap->newUrl(); // or $url = new Url();
 
 foreach ($pages as $page) {
     $sitemap->writeUrl(
@@ -149,4 +150,5 @@ foreach ($pages as $page) {
 $sitemap->closeFile();
 
 echo $sitemap->countUrls() .' URLS recorded';
+$sitemap->clearCountUrls();
 ```

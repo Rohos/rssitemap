@@ -6,10 +6,10 @@ use Rohos\RsSitemap\Validators\Interfaces\Validator;
 use Rohos\RsSitemap\Exceptions\IncorrectElementValueException;
 
 /**
- * Class PriorityValidator
+ * Class LocValidator
  * @package Rohos\RsSitemap\Validators
  */
-class PriorityValidator implements Validator
+class LocValidator implements Validator
 {
     /** @var array */
     private $values;
@@ -17,13 +17,7 @@ class PriorityValidator implements Validator
     /** @var $this|null */
     private static $instance;
 
-    private function __construct()
-    {
-        $this->values = [
-            '0', '0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1'
-        ];
-    }
-
+    private function __construct() {}
     private function __clone() {}
     private function __sleep() {}
     private function __wakeup() {}
@@ -46,8 +40,8 @@ class PriorityValidator implements Validator
      */
     public function check($val)
     {
-        if (!in_array($val, $this->values)) {
-            throw new IncorrectElementValueException('Incorrect value: "'. $val .'" for priority');
+        if (filter_var($val, FILTER_VALIDATE_URL) === FALSE) {
+            throw new IncorrectElementValueException('Incorrect value: "'. $val .'" for loc');
         }
     }
 }
